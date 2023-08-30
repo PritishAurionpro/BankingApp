@@ -2,20 +2,20 @@ class Bank
 {
     static allBank = []
     static bankId = 0
-    constructor(fullName)
+    constructor(fullName, abbreviation)
     {
         this.bankId = Bank.bankId++,
         this.fullName = fullName
-        this.makeAbbrev(fullName)
+        this.abbreviation = abbreviation
         this.account = []
     }
 
-    makeAbbr(fullName) 
-    {
-        const words = fullName.split('')
-        const abbreviation = words.map(words => word[0].toUpperCase()).join('.')
-        return abbreviation
-    }
+    // makeAbbr(fullName) 
+    // {
+    //     const words = fullName.split('')
+    //     const abbreviation = words.map(words => word[0].toUpperCase()).join('.')
+    //     return abbreviation
+    // }
     
     static createBank(fullName)
     {
@@ -23,7 +23,8 @@ class Bank
         {
             throw new Error("Invalid Bank name")
         }
-        let newBank = new Bank(fullName)
+        let abbreviation = fullName.split(' ').map(x => x.charAt(0)).join('')
+        let newBank = new Bank(fullName, abbreviation)
         Bank.allBank.push(newBank)
         return newBank
     }
@@ -36,7 +37,7 @@ class Bank
         }
         for(let index = 0; index<= Bank.allBank.length; index++)
         {
-            if (bankId == Bank.allBank[index].BankId)
+            if (bankId == Bank.allBank[index].bankId)
             {
                 return [Bank.allBank[index],index]
             }      
@@ -44,7 +45,7 @@ class Bank
         return [null, -1]        
     }
 
-    updateBank(bankId, parameter, newValue)
+    static updateBank(bankId, parameter, newValue)
     {
         try {
             if(!this.isAdmin)

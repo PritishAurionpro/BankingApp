@@ -13,9 +13,15 @@ let customer3 = admin1.createCustomer("Shreyas", "c", 7500)
 // admin1.deleteCustomer(3)
 // console.log(Customer.allCustomer)
 
-let bank1 = admin1.createBank("Bank of India")
-let bank2 = admin1.createBank("State Bank of india")
-let bank3 = admin1.createBank("panjab national bank")
+let bank1 = admin1.createBankByAdmin("Bank of India")
+let bank2 = admin1.createBankByAdmin("State Bank of india")
+let bank3 = admin1.createBankByAdmin("panjab national bank")
+
+console.log(admin1.findBankByAdmin(1)) 
+// admin1.updateBankByAdmin(1, 'bank name', 'oriental bank')
+admin1.deleteBankByAdmin(1)
+console.log(admin1.findBankByAdmin(1)) 
+
 
 
 

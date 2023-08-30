@@ -374,12 +374,12 @@ class Customer
                 throw new Error('Only user can have access to passbook')
             }
 
-            let [FoundAccount, indexofAccount] = this.#findAccount(accountNo)
-            if (FoundAccount == null) {
+            let [accountObj, indexofAccount] = this.findAccount(accountNo)
+            if (accountObj == null) {
                 throw new Error('Account No not found')
             }
-            let passbookdetails = FoundAccount.getpassbook()
-            return passbookdetails
+            let passbookDetails = accountObj.getPassbook()
+            return passbookDetails
 
 
         } catch (error) {
