@@ -87,6 +87,10 @@ class Accounts
             {
                 throw new Error('Insufficient Balance')
             }
+            if (this.balance - amount <= 1000)
+            {
+                throw new Error('Insufficicent Balance')
+            }
             this.balance = this.balance - amount
             let withdrawTransaction = this.createTransaction(date, accountNo, accountNo, amount, 'withdraw', this.balance)
             this.passbook.push(withdrawTransaction)
