@@ -1,6 +1,8 @@
 const Accounts = require("./Accounts")
 const Bank = require("./Bank")
 const { bankId } = require("./Bank")
+const Transaction = require("./Transaction")
+
 
 class Customer
 {
@@ -61,7 +63,7 @@ class Customer
             }
             for(let index = 0; index<= Customer.allCustomer.length; index++)
             {
-                if (customerId == Customer.allCustomer[index].id)
+                if (customerId == Customer.allCustomer[index].customerId)
                 {
                     return [Customer.allCustomer[index],index]
                 }      
@@ -86,10 +88,7 @@ class Customer
             {
                 throw new Error("Invalid parameter")
             }
-        } catch (error) {
-            console.log(error.message)
-        }   
-            let [customerObj, indexOfCustomerObj] = this.findCustomer(customerId)
+        let [customerObj, indexOfCustomerObj] = this.findCustomer(customerId)
         switch(parameter)
         {
             case 'first name': customerObj.updateFirstName(newValue)
@@ -101,6 +100,9 @@ class Customer
             default:
                 break;
         }
+        } catch (error) {
+            console.log(error.message)
+        }   
     }
     updateFirstName(newValue)
     {
@@ -188,6 +190,19 @@ class Customer
         }
     }
 
+    getAllBank()
+    {
+        try {
+            if(!this.isAdmin)
+            {
+                throw new Error('only admins can get all banks')
+            }
+            return Bank.getAllBank()
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
     updateBankByAdmin(bankId, parameter, newValue)
     {
         try {
@@ -239,10 +254,6 @@ class Customer
             {
                 throw new Error("Admin cannot create account")
             }
-            if (typeof bankName != 'string')
-            {
-                throw new Error("Invalid bank name")
-            }
             if (typeof balance != 'number')
             {
                 throw new Error("Invalid balance")
@@ -250,7 +261,7 @@ class Customer
             let bankObj = Bank.findBank(bankId)
             let newAccount = Accounts.createAccount(bankObj, balance)
             this.account.push(newAccount)
-            return newAccounts
+            return newAccount
         } catch (error) {
             console.log(error.message)
         }
@@ -291,6 +302,8 @@ class Customer
         }
 
     }
+
+///////////////////////////////////////////////////////////////////////////////////////
 
     deposit(accountNo, amount)
     {
@@ -336,7 +349,7 @@ class Customer
         }
     }
 
-    transferMoney(amount, senderid, receiverid, customerId, type) {
+    transferMoney(amount, senderid, receiverid, customerId) {
         try {
             if (this.isAdmin) {
                 throw new Error('Only customer can transfer money')
@@ -380,8 +393,6 @@ class Customer
             }
             let passbookDetails = accountObj.getPassbook()
             return passbookDetails
-
-
         } catch (error) {
             console.log(error.message);
         }

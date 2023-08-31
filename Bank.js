@@ -45,6 +45,11 @@ class Bank
         return [null, -1]        
     }
 
+    static getAllBank()
+    {
+        return Bank.allBank
+    }
+
     static updateBank(bankId, parameter, newValue)
     {
         try {
@@ -86,20 +91,8 @@ class Bank
     }
     static deleteBank(bankId)
     {
-        try {
-            if(!this.isAdmin)
-            {
-                throw new Error("Only admins can create customer")
-            }
-            if(typeof bankId != 'number')
-            {
-                throw new Error("Invalid bank id")
-            }
-            let [BankObj, indexOfBankObj] = this.findBank(bankId)
-            Bank.allBank.splice(indexOfBankObj, 1)
-        } catch (error) {
-            console.log(error.message)
-        }
+        let [BankObj, indexOfBankObj] = this.findBank(bankId)
+        Bank.allBank.splice(indexOfBankObj, 1)
     }
 }
 module.exports = Bank

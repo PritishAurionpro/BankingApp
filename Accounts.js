@@ -14,20 +14,12 @@ class Accounts
 
     static createAccount(bank, balance)
     {
-        try {
-            if(this.isAdmin)
-            {
-                throw new Error("admins cannot create account")
-            }
-            let newAccount = new Accounts(bank, balance)
-            Accounts.allAccounts.push(newAccount)
-            return newAccount
-        } catch (error) {
-            console.log(error.message)
-        }
+        let newAccount = new Accounts(bank, balance)
+        Accounts.allAccounts.push(newAccount)
+        return newAccount
     }
 
-    findAccount(accountNo)
+    static findAccount(accountNo)
     {
         try {
             if(this.isAdmin)
@@ -50,7 +42,7 @@ class Accounts
         }
     }
 
-    deleteAccount(accountNo)
+    static deleteAccount(accountNo)
     {
         try {
             if(this.isAdmin)
@@ -106,14 +98,14 @@ class Accounts
     sendMoney(amount, senderId, receiverId)
     {
         this.balance = this.balance - amount
-        let sendMoneyTransaction = this.createTransaction(date, senderId, receiverId, amount, 'Send Money', this.balance)
+        let sendMoneyTransaction = this.createTransaction(new Date(), senderId, receiverId, amount, 'Send Money', this.balance)
         this.passbook.push(sendMoneyTransaction)   
     }
 
     receiveMoney(amount, senderId, receiverId)
     {
         this.balance = this.balance + amount
-        let receiveMoneyTransaction = this.createTransaction(date, senderId, receiverId, amount, 'Receive Money', this.balance)
+        let receiveMoneyTransaction = this.createTransaction(new Date(), senderId, receiverId, amount, 'Receive Money', this.balance)
         this.passbook.push(receiveMoneyTransaction)   
     }
 
