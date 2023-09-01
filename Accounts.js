@@ -1,3 +1,4 @@
+const Bank = require("./Bank")
 const Transaction = require("./Transaction")
 
 class Accounts
